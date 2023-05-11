@@ -8,7 +8,6 @@ from pyteal.compiler.constants import (
     extractMethodSigValue,
 )
 
-
 def test_extractIntValue():
     tests = [
         (pt.TealOp(None, pt.Op.int, 0), 0),
@@ -22,7 +21,6 @@ def test_extractIntValue():
     for op, expected in tests:
         actual = extractIntValue(op)
         assert actual == expected
-
 
 def test_extractBytesValue():
     tests = [
@@ -45,7 +43,6 @@ def test_extractBytesValue():
         actual = extractBytesValue(op)
         assert actual == expected
 
-
 def test_extractAddrValue():
     tests = [
         (
@@ -62,7 +59,6 @@ def test_extractAddrValue():
     for op, expected in tests:
         actual = extractAddrValue(op)
         assert actual == expected
-
 
 # test case came from: https://gist.github.com/jasonpaulos/99e4f8a75f2fc2ec9b8073c064530359
 def test_extractMethodValue():
@@ -110,7 +106,6 @@ def test_extractMethodValue():
         actual = extractMethodSigValue(op)
         assert actual == expected
 
-
 def test_createConstantBlocks_empty():
     ops = []
 
@@ -118,7 +113,6 @@ def test_createConstantBlocks_empty():
 
     actual = createConstantBlocks(ops)
     assert actual == expected
-
 
 def test_createConstantBlocks_no_consts():
     ops = [
@@ -131,7 +125,6 @@ def test_createConstantBlocks_no_consts():
 
     actual = createConstantBlocks(ops)
     assert actual == expected
-
 
 def test_createConstantBlocks_pushint():
     ops = [
@@ -167,7 +160,6 @@ def test_createConstantBlocks_intblock_single():
     actual = createConstantBlocks(ops)
     assert actual == expected
 
-
 def test_createConstantBlocks_intblock_multiple():
     ops = [
         pt.TealOp(None, pt.Op.int, 1),
@@ -196,7 +188,6 @@ def test_createConstantBlocks_intblock_multiple():
 
     actual = createConstantBlocks(ops)
     assert actual == expected
-
 
 def test_createConstantBlocks_intblock_pushint():
     ops = [
@@ -227,7 +218,6 @@ def test_createConstantBlocks_intblock_pushint():
     actual = createConstantBlocks(ops)
     assert actual == expected
 
-
 def test_createConstantBlocks_pushbytes():
     ops = [
         pt.TealOp(None, pt.Op.byte, "0x0102"),
@@ -245,7 +235,6 @@ def test_createConstantBlocks_pushbytes():
 
     actual = createConstantBlocks(ops)
     assert actual == expected
-
 
 def test_createConstantBlocks_byteblock_single():
     ops = [
@@ -267,7 +256,6 @@ def test_createConstantBlocks_byteblock_single():
 
     actual = createConstantBlocks(ops)
     assert actual == expected
-
 
 def test_createConstantBlocks_byteblock_multiple():
     ops = [
@@ -337,7 +325,6 @@ def test_createConstantBlocks_byteblock_multiple():
     actual = createConstantBlocks(ops)
     assert actual == expected
 
-
 def test_createConstantBlocks_byteblock_pushbytes():
     ops = [
         pt.TealOp(None, pt.Op.byte, "0x0102"),
@@ -380,7 +367,6 @@ def test_createConstantBlocks_byteblock_pushbytes():
 
     actual = createConstantBlocks(ops)
     assert actual == expected
-
 
 def test_createConstantBlocks_all():
     ops = [
@@ -444,7 +430,6 @@ def test_createConstantBlocks_all():
     actual = createConstantBlocks(ops)
     assert actual == expected
 
-
 def test_createConstantBlocks_tmpl_int():
     ops = [
         pt.TealOp(None, pt.Op.int, "TMPL_INT_1"),
@@ -465,7 +450,6 @@ def test_createConstantBlocks_tmpl_int():
 
     actual = createConstantBlocks(ops)
     assert actual == expected
-
 
 def test_createConstantBlocks_tmpl_int_mixed():
     ops = [
@@ -498,7 +482,6 @@ def test_createConstantBlocks_tmpl_int_mixed():
     actual = createConstantBlocks(ops)
     assert actual == expected
 
-
 def test_createConstantBlocks_tmpl_bytes():
     ops = [
         pt.TealOp(None, pt.Op.byte, "TMPL_BYTES_1"),
@@ -519,7 +502,6 @@ def test_createConstantBlocks_tmpl_bytes():
 
     actual = createConstantBlocks(ops)
     assert actual == expected
-
 
 def test_createConstantBlocks_tmpl_bytes_mixed():
     ops = [
@@ -551,7 +533,6 @@ def test_createConstantBlocks_tmpl_bytes_mixed():
 
     actual = createConstantBlocks(ops)
     assert actual == expected
-
 
 def test_createConstantBlocks_tmpl_all():
     ops = [
@@ -609,7 +590,6 @@ def test_createConstantBlocks_tmpl_all():
     actual = createConstantBlocks(ops)
     assert actual == expected
 
-
 def test_createConstantBlocks_intc():
     """Test scenario where there are more than 4 constants in the intcblock.
     pt.If the 4th constant can't fit in one varuint byte (more than 2**7) it
@@ -646,12 +626,11 @@ def test_createConstantBlocks_intc():
     actual = createConstantBlocks(ops)
     assert actual == expected
 
-
 def test_createConstantBlocks_small_constant():
     """pt.If a constant cannot be referenced using the intc_[0..3] commands
     and it can be stored in one varuint it byte then pt.Op.pushint is used.
     """
-
+    
     for cur in range(4, 2**7):
         ops = [
             pt.TealOp(None, pt.Op.int, 0),
